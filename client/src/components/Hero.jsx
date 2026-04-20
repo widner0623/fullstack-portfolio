@@ -1,14 +1,14 @@
 import "../styles/hero.css"
-import heroImg from "../assets/hero.png";
+import profileImg from "../assets/profileImg.jpg";
 
 function Hero() {
     return (
         <section className="hero">
-            <img src={heroImg} alt="Derrick Widner" className="hero-img"></img>
+            <img src={profileImg} alt="Derrick Widner" className="hero-img"></img>
 
             <h1>Derrick Widner</h1>
             <h3>Full Stack Developer</h3>
-            
+
             <p>
                 Building modern web experiences with clean design and powerful backend systems.
             </p>

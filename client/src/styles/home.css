@@ -9,11 +9,12 @@ section {
     margin: 0 auto;
 }
 h1, h3 {
-    margin: 20px 0;
+    margin: 10px 0;
 }
 p {
     color: #333;
     line-height: 1.6;
+    margin: 0 10px;
 }
 button {
     background-color: #ff3c3c;
