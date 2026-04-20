@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {Link} from "react-router-dom";
 import "../styles/navbar.css";
 
 function Navbar () {
@@ -9,9 +10,9 @@ function Navbar () {
 
         {/* Desktop Links */}
             <div className={`nav-links ${menuOpen ? "open" : ""}`}>
-                <a href="#">Home</a>
-                <a href="#">Projects</a>
-                <a href="#">Contact</a>
+               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+               <Link to="/projects" onClick={() => setMenuOpen(false)}>Projects</Link>
+               <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
             </div>
 
             <div
