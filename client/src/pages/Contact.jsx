@@ -22,7 +22,7 @@ function Contact() {
         setStatus("Sending...");
 
         try {
-            const res = await fetch("/api/contact", {   // ✅ NO localhost
+            const res = await fetch("https://fullstack-portfolio-9fs7.onrender.com/api/contact", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -64,37 +64,39 @@ function Contact() {
                 </div>
             </div>
 
-            <form className="contact-form" onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Your Name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                />
+            <div className="form-wrapper">
+                <form className="contact-form" onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Your Name"
+                        value={form.name}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Your Email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Your Email"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <textarea
-                    name="message"
-                    placeholder="Tell me about your project..."
-                    value={form.message}
-                    onChange={handleChange}
-                    required
-                />
+                    <textarea
+                        name="message"
+                        placeholder="Tell me about your project..."
+                        value={form.message}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <button type="submit">Send Message</button>
-            </form>
+                    <button type="submit">Send Message</button>
+                </form>
 
-            <p className="form-status">{status}</p>
+                <p className="form-status">{status}</p>
+            </div>
         </div>
     );
 }

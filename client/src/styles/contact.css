@@ -3,6 +3,7 @@
     text-align: center;
     color: #000;
 }
+
 .marquee {
     margin-top: 40px;
     width: 100%;
@@ -15,26 +16,31 @@
     color: #111;
     mask-image: linear-gradient(to right, transparent, white 10%, white 90%, transparent);
 }
+
 @media (hover: hover){
     .marquee:hover .marquee-track{
         animation-play-state: paused;
         cursor: default;
     }
 }
+
 @media (hover: none) {
     .marquee:hover .marquee-track{
         animation-play-state: running;
     }
 }
+
 .marquee-track {
     display: inline-flex;
     animation: scroll 60s linear infinite;
 }
+
 .marquee-track span {
     font-size: 18px;
     padding-right: 50px;
     letter-spacing: 1px;
 }
+
 @keyframes scroll {
     from {
         transform: translateX(0);
@@ -43,12 +49,23 @@
         transform: translateX(-50%);
     }
 }
+
+/* NEW WRAPPER */
+.form-wrapper {
+    margin-top: 60px;
+}
+
+/* FORM */
 .contact-form {
     max-width: 500px;
-    margin: 40px auto 0;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .contact-form input,
