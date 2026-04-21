@@ -4,21 +4,38 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import mongoose from "mongoose";
 
+// load environment variables
 dotenv.config();
 
 const app = express();
 
-/* ---------------- MIDDLEWARE ---------------- */
+/* =========================
+   MIDDLEWARE
+========================= */
 
-app.use(cors());
+// allow requests from my frontend (Vercel + local dev)
+app.use(cors({
+    origin: [
+        "https://redlinelabs.vercel.app",
+        "http://localhost:5173"
+    ],
+    methods: ["GET", "POST"],
+    credentials: true
+}));
+
+// allow JSON data in requests
 app.use(express.json());
 
-/* ---------------- DATABASE ---------------- */
+/* =========================
+   DATABASE CONNECTION
+========================= */
 
+// connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("✅ MongoDB connected"))
-    .catch(err => console.error("❌ Mongo Error:", err));
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.error("MongoDB error:", err));
 
+// schema for contact form submissions
 const contactSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -29,34 +46,87 @@ const contactSchema = new mongoose.Schema({
     }
 });
 
+// create model (collection will be "contacts")
 const Contact = mongoose.model("Contact", contactSchema);
 
-/* ---------------- ROUTES ---------------- */
+/* =========================
+   ROUTES
+========================= */
 
+// basic test route
 app.get("/", (req, res) => {
     res.send("API is running...");
 });
 
+// contact form route
 app.post("/api/contact", async (req, res) => {
-    console.log("🔥 RAW BODY:", req.body);
+    console.log("Incoming request body:", req.body);
 
-    const { name, email, message } = req.body;
+    try {
+        const { name, email, message } = req.body;
 
-        // Validate incoming data
+        // basic validation
         if (!name || !email || !message) {
-            console.log("❌ Missing fields");
-            return res.status(400).json({ success: false, message: "All fields are required" });
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required"
+            });
         }
 
-        console.log("📥 Data received:", name, email, message);
+        // save submission to MongoDB
+        const newContact = new Contact({
+            name,
+            email,
+            message
+        });
 
-        return res.status(200).json({ success: tru });
+        await newContact.save();
+
+        console.log("Saved to database");
+
+        // email setup (iCloud SMTP)
+        const transporter = nodemailer.createTransport({
+            service: "icloud",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        // send email notification
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_USER,
+            subject: "New Contact Form Submission",
+            text: `
+Name: ${name}
+Email: ${email}
+Message: ${message}
+            `
+        });
+
+        console.log("Email sent");
+
+        res.status(200).json({
+            success: true
+        });
+
+    } catch (error) {
+        console.error("Server error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
 });
 
-/* ---------------- SERVER ---------------- */
+/* =========================
+   SERVER START
+========================= */
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server is running on Port: ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
