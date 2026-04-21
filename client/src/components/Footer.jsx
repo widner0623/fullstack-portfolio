@@ -1,6 +1,6 @@
 import "../styles/footer.css";
 import { Link, useLocation } from "react-router-dom";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaFacebook, FaCommentDots } from "react-icons/fa";
 
 function Footer() {
      const location = useLocation();
@@ -34,11 +34,17 @@ function Footer() {
                 </div>
 
                 <div className="footer-socials">
-                    <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                    <a href="https://linkedin.com/in/derrick-w-549757211/" target="_blank" rel="noreferrer">
                         <FaLinkedin />
                     </a>
-                    <a href="https://Facebook.com" target="_blank" rel="noreferrer">
+                    <a href="https://github.com/widner0623/" target="_blank" rel="noreferrer">
                         <FaGithub />
+                    </a>
+                    <a href="https://Facebook.com/derrick.widner.7/" target="_blank" rel="noreferrer">
+                        <FaFacebook />
+                    </a>
+                    <a  href="sms:+15093368537" rel="noreferrer">
+                        <FaCommentDots />
                     </a>
                 </div>
 
