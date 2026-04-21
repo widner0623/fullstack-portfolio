@@ -58,14 +58,12 @@ app.get("/", (req, res) => {
     res.send("API is running...");
 });
 
-// contact form route
 app.post("/api/contact", async (req, res) => {
     console.log("Incoming request body:", req.body);
 
     try {
         const { name, email, message } = req.body;
 
-        // basic validation
         if (!name || !email || !message) {
             return res.status(400).json({
                 success: false,
@@ -73,50 +71,23 @@ app.post("/api/contact", async (req, res) => {
             });
         }
 
-        // save submission to MongoDB
-        const newContact = new Contact({
-            name,
-            email,
-            message
-        });
-
+        // Save to MongoDB
+        const newContact = new Contact({ name, email, message });
         await newContact.save();
 
-        console.log("Saved to database");
+        console.log("✅ Saved to database");
 
-        // email setup (iCloud SMTP)
-        const transporter = nodemailer.createTransport({
-            service: "icloud",
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS
-            }
-        });
+        // 🚨 EMAIL TEMP DISABLED
+        // const transporter = nodemailer.createTransport({...})
+        // await transporter.sendMail({...})
 
-        // send email notification
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER,
-            subject: "New Contact Form Submission",
-            text: `
-Name: ${name}
-Email: ${email}
-Message: ${message}
-            `
-        });
-
-        console.log("Email sent");
-
-        res.status(200).json({
-            success: true
-        });
+        res.status(200).json({ success: true });
 
     } catch (error) {
-        console.error("Server error:", error);
-
+        console.error("❌ ERROR:", error.message);
         res.status(500).json({
             success: false,
-            message: "Server error"
+            message: error.message
         });
     }
 });
