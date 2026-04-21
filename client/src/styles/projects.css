@@ -1,6 +1,107 @@
 .projects {
-    background-color: orange;
-    color: black;
-    min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+    padding: 60px 20px;
+}
+.projects h1 {
+    margin-bottom: 40px;
+    text-align: center;
+}
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+.project-card {
+    text-align: center;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+.project-card:hover {
+    transform: translateY(-8px);
+}
+.project-image {
+    position: relative;
+    overflow: hidden;
+}
+.project-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.project-card:hover .project-overlay{
+    opacity: 1;
+}
+.project-overlay a {
+    padding: 12px 20px;
+    margin: 0 10px;
+    background: #fff;
+    color: #555;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.project-content {
+    padding: 20px;
+}
+.project-content h3 {
+    color: #000;
+    margin-bottom: 10px;
+}
+.project-content p {
+    color: #555;
+}
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+.tag {
+    background: #ccc;
+    color: #222;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+@media (max-width: 768px) {
+    .project-overlay {
+        position: static;
+        opacity: 1;
+        background: none;
+        height: auto;
+    }
+    .project-buttons {
+        margin-top: 25px;
+        justify-content: flex-start;
+        padding: 10px;
+    }
+    .project-buttons a {
+        color: #fff;
+        background: #333;
+    }
+    .project-image {
+        margin-bottom: 0;
+    }
+    .project-card:hover {
+    transform: none;
+}
 }

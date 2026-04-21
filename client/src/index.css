@@ -1,4 +1,4 @@
-/* RESET */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +7,7 @@
 
 /* GLOBAL STYLES */
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   background-color: #0f0f0f;
   color: white;
 }
