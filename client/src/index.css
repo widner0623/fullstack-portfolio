@@ -10,7 +10,8 @@ body {
   font-family: 'JetBrains Mono', monospace;
   background-color: #0f0f0f;
   color: white;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* ROOT APP CONTAINER */
