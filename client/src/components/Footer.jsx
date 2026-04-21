@@ -5,7 +5,6 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 function Footer() {
      const location = useLocation();
         const handleNavClick = (path) => {
-            setMenuOpen(false);
             if (location.pathname === path) {
                 window.scrollTo({
                     top: 0,
@@ -29,21 +28,9 @@ function Footer() {
                 <p>Full Stack Developer</p>
 
                 <div className="footer-links">
-                    <Link to="/" 
-                        onClick={(e) => {
-                            e.preventDefault();
-                            handleNavClick("/")
-                        }}>Home</Link>
-                    <Link to="/projects" 
-                        onClick={(e) => {
-                            e.preventDefault();
-                            handleNavClick("/projects")
-                        }}>Projects</Link>
-                    <Link to="/contact" 
-                        onClick={(e) => {
-                            e.preventDefault();
-                            handleNavClick("/contact")
-                        }}>Contact</Link>
+                    <Link to="/" onClick={() => handleNavClick("/")}>Home</Link>
+                    <Link to="/projects" onClick={() => handleNavClick("/projects")}>Projects</Link>
+                    <Link to="/contact" onClick={() => handleNavClick("/contact")}>Contact</Link>
                 </div>
 
                 <div className="footer-socials">
