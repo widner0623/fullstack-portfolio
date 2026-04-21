@@ -9,6 +9,7 @@ function Contact() {
     });
 
     const [status, setStatus] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setForm({
@@ -19,16 +20,23 @@ function Contact() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (loading) return; // prevent spam
+
+        setLoading(true);
         setStatus("Sending...");
 
         try {
-            const res = await fetch("https://fullstack-portfolio-9fs7.onrender.com/api/contact", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(form)
-            });
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/contact`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(form)
+                }
+            );
 
             const data = await res.json();
 
@@ -36,10 +44,12 @@ function Contact() {
                 setStatus("Message sent!");
                 setForm({ name: "", email: "", message: "" });
             } else {
-                setStatus("Something went wrong.");
+                setStatus(data.message || "Something went wrong.");
             }
         } catch (err) {
-            setStatus("Server error.");
+            setStatus("Server error. Try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -92,7 +102,9 @@ function Contact() {
                         required
                     />
 
-                    <button type="submit">Send Message</button>
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Sending..." : "Send Message"}
+                    </button>
                 </form>
 
                 <p className="form-status">{status}</p>
