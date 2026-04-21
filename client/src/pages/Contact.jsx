@@ -4,18 +4,48 @@ import "../styles/contact.css";
 function Contact() {
     const [form, setForm] = useState({
         name: "",
+        phone: "",
         email: "",
         message: ""
     });
 
     const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(false);
+    const formatPhone = (value) => {
+        const digits = value.replace(/\D/g, "").slice(0, 10);
+
+        const parts = [];
+
+        if (digits.length > 0) {
+            parts.push("+1");
+        }
+        if (digits.length >= 1) {
+            parts.push(`(${digits.slice(0, 3)}`);
+        }
+        if (digits.length >= 4) {
+            parts[1] += `)`;
+            parts.push(` ${digits.slice(3, 6)}`);
+        }
+        if (digits.length >= 7) {
+            parts.push(`-${digits.slice(6, 10)}`);
+        }
+        return parts.join("");
+    };
 
     const handleChange = (e) => {
+       const {name, value } = e.target;
+
+       if (name === "phone") {
         setForm({
             ...form,
-            [e.target.name]: e.target.value
+            phone: formatPhone(value)
         });
+       } else {
+        setForm({
+            ...form,
+            [name]: value
+        });
+       }
     };
 
     const handleSubmit = async (e) => {
@@ -81,6 +111,15 @@ function Contact() {
                         name="name"
                         placeholder="Your Name"
                         value={form.name}
+                        onChange={handleChange}
+                        required
+                    />
+
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Your Phone "
+                        value={form.phone}
                         onChange={handleChange}
                         required
                     />
