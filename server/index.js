@@ -4,16 +4,11 @@ import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import mongoose from "mongoose";
 
-// load environment variables
 dotenv.config();
 
 const app = express();
 
-/* =========================
-   MIDDLEWARE
-========================= */
-
-// allow requests from my frontend (Vercel + local dev)
+// middleware
 app.use(cors({
     origin: [
         "https://redlinelabs.vercel.app",
@@ -23,19 +18,13 @@ app.use(cors({
     credentials: true
 }));
 
-// allow JSON data in requests
 app.use(express.json());
 
-/* =========================
-   DATABASE CONNECTION
-========================= */
-
-// connect to MongoDB Atlas
+// db
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB connected"))
-    .catch((err) => console.error("MongoDB error:", err));
+    .catch((err) => console.error("Mongo error:", err));
 
-// schema for contact form submissions
 const contactSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -46,21 +35,14 @@ const contactSchema = new mongoose.Schema({
     }
 });
 
-// create model (collection will be "contacts")
 const Contact = mongoose.model("Contact", contactSchema);
 
-/* =========================
-   ROUTES
-========================= */
-
-// basic test route
+// routes
 app.get("/", (req, res) => {
     res.send("API is running...");
 });
 
 app.post("/api/contact", async (req, res) => {
-    console.log("Incoming request body:", req.body);
-
     try {
         const { name, email, message } = req.body;
 
@@ -71,31 +53,37 @@ app.post("/api/contact", async (req, res) => {
             });
         }
 
-        // Save to MongoDB
         const newContact = new Contact({ name, email, message });
         await newContact.save();
 
-        console.log("✅ Saved to database");
+        // email
+        const transporter = nodemailer.createTransport({
+            service: "icloud",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
 
-        // 🚨 EMAIL TEMP DISABLED
-        // const transporter = nodemailer.createTransport({...})
-        // await transporter.sendMail({...})
+        await transporter.sendMail({
+            from: process.env.EMAIL_USER,
+            to: process.env.EMAIL_USER,
+            subject: "New Contact Form Submission",
+            text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+        });
 
         res.status(200).json({ success: true });
 
     } catch (error) {
-        console.error("❌ ERROR:", error.message);
+        console.error("Server error:", error.message);
         res.status(500).json({
             success: false,
-            message: error.message
+            message: "Server error"
         });
     }
 });
 
-/* =========================
-   SERVER START
-========================= */
-
+// server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
