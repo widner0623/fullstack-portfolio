@@ -11,34 +11,32 @@ function Contact() {
 
     const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(false);
-    const formatPhone = (value) => {
-        const digits = value.replace(/\D/g, "").slice(0, 10);
-
-        const parts = [];
+    const formatPhone = (digits) => {
+        if (!digits) return "";
+        let formatted = "+1";
 
         if (digits.length > 0) {
-            parts.push("+1");
-        }
-        if (digits.length >= 1) {
-            parts.push(`(${digits.slice(0, 3)}`);
+            formatted += `(${digits.slice(0, 3)}`;
         }
         if (digits.length >= 4) {
             parts[1] += `)`;
-            parts.push(` ${digits.slice(3, 6)}`);
+            formatted += `) ${digits.slice(3, 6)}`;
         }
         if (digits.length >= 7) {
-            parts.push(`-${digits.slice(6, 10)}`);
+            formatted += `-${digits.slice(6, 10)}`;
         }
-        return parts.join("");
+        return formatted;
     };
 
     const handleChange = (e) => {
        const {name, value } = e.target;
 
        if (name === "phone") {
+        const digits = value.replace(/\D/g, "").slice(0, 10);
+
         setForm({
             ...form,
-            phone: formatPhone(value)
+            phone: digits
         });
        } else {
         setForm({
@@ -119,7 +117,7 @@ function Contact() {
                         type="tel"
                         name="phone"
                         placeholder="Your Phone "
-                        value={form.phone}
+                        value={formatPhone(form.phone)}
                         onChange={handleChange}
                         required
                     />
