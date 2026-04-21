@@ -29,9 +29,21 @@ function Footer() {
                 <p>Full Stack Developer</p>
 
                 <div className="footer-links">
-                    <Link to="/" onClick={() => handleNavClick("/")}>Home</Link>
-                    <Link to="/projects" onClick={() => handleNavClick("/projects")}>Projects</Link>
-                    <Link to="/contact" onClick={() => handleNavClick("/contact")}>Contact</Link>
+                    <Link to="/" 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleNavClick("/")
+                        }}>Home</Link>
+                    <Link to="/projects" 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleNavClick("/projects")
+                        }}>Projects</Link>
+                    <Link to="/contact" 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleNavClick("/contact")
+                        }}>Contact</Link>
                 </div>
 
                 <div className="footer-socials">
