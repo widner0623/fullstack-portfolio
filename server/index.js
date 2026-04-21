@@ -39,11 +39,11 @@ app.post("/api/contact", async (req, res) => {
     const { name, email, message } = req.body;
 
     try {
-        // 🗄️ Save to MongoDB
+        // Save to MongoDB
         const newContact = new Contact({ name, email, message });
         await newContact.save();
 
-        // 📩 Email setup (iCloud SMTP)
+        // Email setup (iCloud SMTP)
         const transporter = nodemailer.createTransport({
             service: "icloud",
             auth: {
@@ -52,17 +52,17 @@ app.post("/api/contact", async (req, res) => {
             }
         });
 
-        // 📩 Send email
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_USER,
-            subject: "New Contact Form Submission",
-            text: `
-Name: ${name}
-Email: ${email}
-Message: ${message}
-            `
-        });
+        // Send email
+//         await transporter.sendMail({
+//             from: process.env.EMAIL_USER,
+//             to: process.env.EMAIL_USER,
+//             subject: "New Contact Form Submission",
+//             text: `
+// Name: ${name}
+// Email: ${email}
+// Message: ${message}
+//             `
+//         });
 
         console.log("New Contact Form Submission:");
         console.log("Name:", name);
