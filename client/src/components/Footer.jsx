@@ -1,8 +1,26 @@
 import "../styles/footer.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 function Footer() {
+     const location = useLocation();
+        const handleNavClick = (path) => {
+            setMenuOpen(false);
+            if (location.pathname === path) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "instant",
+                });
+            }   else {
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "instant"
+                });
+            }, 50);
+        }
+    };
+
     return (
         <footer className="footer">
             <div className="footer-content">
@@ -11,9 +29,9 @@ function Footer() {
                 <p>Full Stack Developer</p>
 
                 <div className="footer-links">
-                    <Link to="/">Home</Link>
-                    <Link to="/projects">Projects</Link>
-                    <Link to="/contact">Contact</Link>
+                    <Link to="/" onClick={() => handleNavClick("/")}>Home</Link>
+                    <Link to="/projects" onClick={() => handleNavClick("/projects")}>Projects</Link>
+                    <Link to="/contact" onClick={() => handleNavClick("/contact")}>Contact</Link>
                 </div>
 
                 <div className="footer-socials">

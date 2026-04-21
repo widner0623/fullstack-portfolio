@@ -1,18 +1,35 @@
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import "../styles/navbar.css";
 
 function Navbar () {
     const [menuOpen, setMenuOpen] = useState(false);
+    const location = useLocation();
+    const handleNavClick = (path) => {
+        setMenuOpen(false);
+        if (location.pathname === path) {
+            window.scrollTo({
+                top: 0,
+                behavior: "instant",
+            });
+        } else {
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "instant"
+                });
+            }, 50);
+        }
+    };
     return (
         <nav className="navbar">
             <h2 className="logo">Redline Labs</h2>
 
         {/* Desktop Links */}
             <div className={`nav-links ${menuOpen ? "open" : ""}`}>
-               <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-               <Link to="/projects" onClick={() => setMenuOpen(false)}>Projects</Link>
-               <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+               <Link to="/" onClick={() => handleNavClick("/")}>Home</Link>
+               <Link to="/projects" onClick={() => handleNavClick("/projects")}>Projects</Link>
+               <Link to="/contact" onClick={() => handleNavClick("/contact")}>Contact</Link>
             </div>
 
             <div
