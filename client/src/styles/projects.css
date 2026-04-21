@@ -1,5 +1,7 @@
 .projects {
     padding: 60px 20px;
+    background-color: #f0f0f0;
+    color: black;
 }
 .projects h1 {
     margin-bottom: 40px;
@@ -7,19 +9,21 @@
 }
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     gap: 30px;
 }
 .project-card {
     text-align: center;
     background: #fff;
+    border: 2px solid #666;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 8px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .project-card:hover {
     transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.8);
 }
 .project-image {
     position: relative;
@@ -82,14 +86,22 @@
     font-size: 12px;
     font-weight: 500;
 }
-@media (max-width: 768px) {
+@media (hover: hover) {
+    .project-overlay {
+        transition: opacity 0.3s ease;
+    }
+    .project-card:hover .project-overlay {
+        opacity: 1;
+    }
+}
+@media (hover: none) {
     .project-overlay {
         position: static;
         opacity: 1;
         background: none;
         height: auto;
     }
-    .project-buttons {
+     .project-buttons {
         margin-top: 25px;
         justify-content: flex-start;
         padding: 10px;
@@ -101,7 +113,11 @@
     .project-image {
         margin-bottom: 0;
     }
+    .project-card {
+        box-shadow: none;
+    }
     .project-card:hover {
-    transform: none;
-}
+        transform: none;
+        box-shadow: none;
+    }
 }

@@ -16,14 +16,32 @@ function Projects() {
                     demo="https://google.com"
                     github="https://github.com"
                     tags={["React", "Node", "Express", ]}
-                /><ProjectCard
+                />
+                <ProjectCard
                     title="Sample Project"
                     description="Full Stack website sample description"
                     image={placeholder}
                     demo="https://google.com"
                     github="https://github.com"
                     tags={["React", "Node", "Express", "CORS"]}
-                /><ProjectCard
+                />
+                <ProjectCard
+                    title="Sample Project"
+                    description="Full Stack website sample description"
+                    image={placeholder}
+                    demo="https://google.com"
+                    github="https://github.com"
+                    tags={["React", "Node", "Express", "SQL", "JavaScript"]}
+                />
+                <ProjectCard
+                    title="Sample Project"
+                    description="Full Stack website sample description"
+                    image={placeholder}
+                    demo="https://google.com"
+                    github="https://github.com"
+                    tags={["React", "Node", "Express", "SQL", "JavaScript"]}
+                />
+                <ProjectCard
                     title="Sample Project"
                     description="Full Stack website sample description"
                     image={placeholder}

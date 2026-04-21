@@ -12,7 +12,7 @@
     justify-content: center;
     gap: 10px;
 }
-button {
+.link-button {
     padding: 10px 20px;
     border: none;
     cursor: pointer;

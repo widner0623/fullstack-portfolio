@@ -1,5 +1,6 @@
 import "../styles/hero.css"
 import profileImg from "../assets/profileImg.jpg";
+import { Link } from "react-router-dom"
 
 function Hero() {
     return (
@@ -14,8 +15,8 @@ function Hero() {
             </p>
 
             <div className="hero-buttons">
-                <button>View Projects</button>
-                <button>Contact Me</button>
+                <Link className="link-button" to="/projects">View Projects</Link>
+                <Link className="link-button" to="/contact">Contact Me</Link>
             </div>
         </section>
     );
