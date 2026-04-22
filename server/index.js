@@ -115,7 +115,7 @@ app.post("/api/contact", async (req, res) => {
                     <h2>Thanks for reaching out</h2>
                     <p>Hey ${name},</p>
                     <p>I got your message and will get back to you soon.</p>
-                    <p>- Derrick</p>
+                    <p>- Derrick W.</p>
                 </div>
             `
         });
