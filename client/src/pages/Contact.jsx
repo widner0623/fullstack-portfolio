@@ -13,16 +13,16 @@ function Contact() {
     const [loading, setLoading] = useState(false);
 
     // format for display only
-    const formatPhone = (digits) => {
-        if (!digits) return "";
+   const formatPhone = (digits) => {
+    if (!digits) return "";
 
-        const clean = digits.replace(/\D/g, "").slice(0, 10);
-        const len = clean.length;
+    const clean = digits.replace(/\D/g, "").slice(0, 10);
+    const len = clean.length;
 
-        if (len < 4) return `+1 (${clean}`;
-        if (len < 7) return `+1 (${clean.slice(0, 3)}) ${clean.slice(3)}`;
-        return `+1 (${clean.slice(0, 3)}) ${clean.slice(3, 6)}-${clean.slice(6)}`;
-    };
+    if (len < 4) return `(${clean}`;
+    if (len < 7) return `(${clean.slice(0, 3)}) ${clean.slice(3)}`;
+    return `(${clean.slice(0, 3)}) ${clean.slice(3, 6)}-${clean.slice(6)}`;
+};
 
     const handleChange = (e) => {
         const { name, value } = e.target;
