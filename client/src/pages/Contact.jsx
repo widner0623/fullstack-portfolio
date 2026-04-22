@@ -4,7 +4,7 @@ import "../styles/contact.css";
 function Contact() {
     const [form, setForm] = useState({
         name: "",
-        phone: "",
+        phone: "", // raw digits only
         email: "",
         message: ""
     });
@@ -12,7 +12,7 @@ function Contact() {
     const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // format phone AFTER user finishes typing
+    // format for display only
     const formatPhone = (digits) => {
         if (!digits) return "";
 
@@ -28,7 +28,7 @@ function Contact() {
         const { name, value } = e.target;
 
         if (name === "phone") {
-            // store ONLY digits while typing
+            // always store raw digits only
             const digits = value.replace(/\D/g, "").slice(0, 10);
 
             setForm((prev) => ({
@@ -43,18 +43,16 @@ function Contact() {
         }
     };
 
-    // format when user clicks away (no cursor issues)
-    const handlePhoneBlur = () => {
-        setForm((prev) => ({
-            ...prev,
-            phone: formatPhone(prev.phone)
-        }));
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (loading) return;
+
+        // simple validation
+        if (form.phone.length !== 10) {
+            setStatus("Please enter a valid 10-digit phone number.");
+            return;
+        }
 
         setLoading(true);
         setStatus("Sending...");
@@ -67,7 +65,10 @@ function Contact() {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(form)
+                    body: JSON.stringify({
+                        ...form,
+                        phone: `+1${form.phone}` // send clean version
+                    })
                 }
             );
 
@@ -127,9 +128,8 @@ function Contact() {
                         type="tel"
                         name="phone"
                         placeholder="Your Number"
-                        value={form.phone}
+                        value={formatPhone(form.phone)} // 👈 display formatted
                         onChange={handleChange}
-                        onBlur={handlePhoneBlur}
                         required
                     />
 
