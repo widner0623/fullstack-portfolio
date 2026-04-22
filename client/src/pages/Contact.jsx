@@ -13,10 +13,10 @@ function Contact() {
     const [loading, setLoading] = useState(false);
 
     const formatPhone = (digits) => {
+        if (!digits) return "";
         const clean = digits.replace(/\D/g, "").slice(0, 10);
         const len = clean.length;
 
-        if (len === 0) return "";
         if (len < 4) return `+1 (${clean}`;
         if (len < 7) return `+1 (${clean.slice(0, 3)}) ${clean.slice(3)}`;
         return `+1 (${clean.slice(0, 3)}) ${clean.slice(3, 6)}-${clean.slice(6)}`;
@@ -28,15 +28,15 @@ function Contact() {
         if (name === "phone") {
             const digits = value.replace(/\D/g, "").slice(0, 10);
 
-            setForm({
-                ...form,
+            setForm((prev) => ({
+                ...prev,
                 phone: digits
-            });
+            }));
         } else {
-            setForm({
-                ...form,
+            setForm((prev) => ({
+                ...prev,
                 [name]: value
-            });
+            }));
         }
     };
 
