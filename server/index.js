@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import mongoose from "mongoose";
+import twilio from "twilio";
 
 dotenv.config();
 
@@ -47,6 +48,11 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+const smsClient = twilio(
+    process.env.TWILIO_SID,
+    process.env.TWILIO_AUTH
+);
+
 // quick check
 transporter.verify((err) => {
     if (err) console.log("SMTP error:", err.message);
@@ -79,22 +85,56 @@ app.post("/api/contact", async (req, res) => {
 
         const date = new Date().toLocaleString();
 
+        // sms
+        await smsClient.messages.create({
+            body: `New Lead:
+            Name: ${name}
+            phone: ${phone}
+            Message: ${message}`,
+                from: process.env.TWILIO_PHONE,
+                to: process.env.MY_PHONE
+        });
+        console.log("SMS sent");
+
         // email to you
         await transporter.sendMail({
             from: `"Derrick Widner" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_USER,
             subject: `New Lead from ${name}`,
-            html: `
-                <div style="font-family: Arial; padding:20px;">
-                    <h2>New Client Inquiry</h2>
-                    <p style="font-size:12px; color:#777;">${date}</p>
-                    <hr/>
-                    <p><strong>Name:</strong> ${name}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Phone:</strong> ${phone}</p>
-                    <p><strong>Message:</strong></p>
-                    <p>${message}</p>
+           html: `
+            <div style="font-family: Arial, sans-serif; background:#f9fafb; padding:30px;">
+            <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:10px; padding:25px; border:1px solid #e5e7eb;">
+                
+                <h2 style="margin:0; color:#111827;">New Client Inquiry</h2>
+                <p style="font-size:12px; color:#6b7280; margin-top:5px;">${date}</p>
+
+                <hr style="border:none; border-top:1px solid #e5e7eb; margin:20px 0;" />
+
+                <table style="width:100%; font-size:14px; color:#374151;">
+                <tr><td><strong>Name:</strong></td><td>${name}</td></tr>
+                <tr><td><strong>Email:</strong></td><td>${email}</td></tr>
+                <tr><td><strong>Phone:</strong></td><td>${phone}</td></tr>
+                </table>
+
+                <div style="margin-top:20px;">
+                <strong>Project Details:</strong>
+                <p style="margin-top:8px; line-height:1.6;">${message}</p>
                 </div>
+
+                <div style="margin-top:25px;">
+                <a href="mailto:${email}"
+                    style="display:inline-block; padding:10px 16px; background:#111827; color:#ffffff; text-decoration:none; border-radius:6px; margin-right:10px;">
+                    Reply via Email
+                </a>
+
+                <a href="tel:${phone}"
+                    style="display:inline-block; padding:10px 16px; background:#e5e7eb; color:#111827; text-decoration:none; border-radius:6px;">
+                    Call Client
+                </a>
+                </div>
+
+            </div>
+            </div>
             `
         });
 
@@ -105,13 +145,44 @@ app.post("/api/contact", async (req, res) => {
             from: `"Derrick Widner" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Got your message",
-            html: `
-                <div style="font-family: Arial; padding:20px;">
-                    <h2>Thanks for reaching out</h2>
-                    <p>Hey ${name},</p>
-                    <p>I got your message and will get back to you soon.</p>
-                    <p>- Derrick W.</p>
+          html: `
+            <div style="font-family: Arial, sans-serif; background:#f9fafb; padding:30px;">
+            <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:10px; padding:25px; border:1px solid #e5e7eb;">
+
+                <h2 style="margin:0; color:#111827;">Redline Labs</h2>
+
+                <p style="margin-top:20px;">Hey ${name},</p>
+
+                <p style="color:#374151; line-height:1.6;">
+                Thanks for reaching out — I’ve received your message and will be reviewing your project details shortly.
+                I’ll follow up with you soon to discuss your goals, scope, and next steps.
+                </p>
+
+                <div style="margin-top:20px; padding:15px; background:#f9fafb; border:1px solid #e5e7eb; border-radius:8px;">
+                <p style="margin:0; font-size:14px; color:#374151;">
+                    <strong>Project Expectations:</strong><br/>
+                    • Most projects typically range between <strong>$500 – $2,000</strong><br/>
+                    • Timelines vary depending on complexity, but most builds are completed within <strong>1–3 weeks</strong><br/>
+                    • Final pricing and timeline are determined after reviewing full project details
+                </p>
                 </div>
+
+                <p style="margin-top:20px; color:#374151;">
+                In the meantime, feel free to check out some of my recent work below.
+                </p>
+
+                <a href="https://redlinelabs.vercel.app/projects"
+                style="display:inline-block; margin-top:15px; padding:12px 18px; background:#111827; color:#ffffff; text-decoration:none; border-radius:6px; font-weight:500;">
+                View My Projects
+                </a>
+
+                <p style="margin-top:30px; font-size:14px; color:#6b7280;">
+                – Derrick Widner<br/>
+                Redline Labs
+                </p>
+
+            </div>
+            </div>
             `
         });
 
