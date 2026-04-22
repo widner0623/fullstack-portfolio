@@ -12,8 +12,10 @@ function Contact() {
     const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(false);
 
+    // format phone AFTER user finishes typing
     const formatPhone = (digits) => {
         if (!digits) return "";
+
         const clean = digits.replace(/\D/g, "").slice(0, 10);
         const len = clean.length;
 
@@ -26,6 +28,7 @@ function Contact() {
         const { name, value } = e.target;
 
         if (name === "phone") {
+            // store ONLY digits while typing
             const digits = value.replace(/\D/g, "").slice(0, 10);
 
             setForm((prev) => ({
@@ -38,6 +41,14 @@ function Contact() {
                 [name]: value
             }));
         }
+    };
+
+    // format when user clicks away (no cursor issues)
+    const handlePhoneBlur = () => {
+        setForm((prev) => ({
+            ...prev,
+            phone: formatPhone(prev.phone)
+        }));
     };
 
     const handleSubmit = async (e) => {
@@ -115,9 +126,10 @@ function Contact() {
                     <input
                         type="tel"
                         name="phone"
-                        placeholder="+1 (123) 456-7890"
-                        value={formatPhone(form.phone)}
+                        placeholder="Your Number"
+                        value={form.phone}
                         onChange={handleChange}
+                        onBlur={handlePhoneBlur}
                         required
                     />
 
