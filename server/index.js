@@ -86,15 +86,20 @@ app.post("/api/contact", async (req, res) => {
         const date = new Date().toLocaleString();
 
         // sms
+       // sms (non-blocking)
+    try {
         await smsClient.messages.create({
-            body: `New Lead:
+            body: `🔥 New Lead:
             Name: ${name}
-            phone: ${phone}
+            Phone: ${phone}
             Message: ${message}`,
-                from: process.env.TWILIO_PHONE,
-                to: process.env.MY_PHONE
+            from: process.env.TWILIO_PHONE,
+            to: process.env.MY_PHONE
         });
         console.log("SMS sent");
+    } catch (err) {
+        console.log("SMS failed:", err.message);
+    }
 
         // email to you
         await transporter.sendMail({
