@@ -11,45 +11,39 @@ function Contact() {
 
     const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(false);
-    const formatPhone = (digits) => {
-        if (!digits) return "";
-        let formatted = "+1";
 
-        if (digits.length > 0) {
-            formatted += `(${digits.slice(0, 3)}`;
-        }
-        if (digits.length >= 4) {
-            parts[1] += `)`;
-            formatted += `) ${digits.slice(3, 6)}`;
-        }
-        if (digits.length >= 7) {
-            formatted += `-${digits.slice(6, 10)}`;
-        }
-        return formatted;
+    const formatPhone = (digits) => {
+        const clean = digits.replace(/\D/g, "").slice(0, 10);
+        const len = clean.length;
+
+        if (len === 0) return "";
+        if (len < 4) return `+1 (${clean}`;
+        if (len < 7) return `+1 (${clean.slice(0, 3)}) ${clean.slice(3)}`;
+        return `+1 (${clean.slice(0, 3)}) ${clean.slice(3, 6)}-${clean.slice(6)}`;
     };
 
     const handleChange = (e) => {
-       const {name, value } = e.target;
+        const { name, value } = e.target;
 
-       if (name === "phone") {
-        const digits = value.replace(/\D/g, "").slice(0, 10);
+        if (name === "phone") {
+            const digits = value.replace(/\D/g, "").slice(0, 10);
 
-        setForm({
-            ...form,
-            phone: digits
-        });
-       } else {
-        setForm({
-            ...form,
-            [name]: value
-        });
-       }
+            setForm({
+                ...form,
+                phone: digits
+            });
+        } else {
+            setForm({
+                ...form,
+                [name]: value
+            });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (loading) return; // prevent spam
+        if (loading) return;
 
         setLoading(true);
         setStatus("Sending...");
@@ -70,7 +64,12 @@ function Contact() {
 
             if (res.ok) {
                 setStatus("Message sent!");
-                setForm({ name: "", email: "", message: "" });
+                setForm({
+                    name: "",
+                    phone: "",
+                    email: "",
+                    message: ""
+                });
             } else {
                 setStatus(data.message || "Something went wrong.");
             }
@@ -116,7 +115,7 @@ function Contact() {
                     <input
                         type="tel"
                         name="phone"
-                        placeholder="Your Phone "
+                        placeholder="+1 (123) 456-7890"
                         value={formatPhone(form.phone)}
                         onChange={handleChange}
                         required
