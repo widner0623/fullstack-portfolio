@@ -40,20 +40,17 @@ const Contact = mongoose.model("Contact", contactSchema);
 
 /* mail */
 const transporter = nodemailer.createTransport({
-    host: "gmail",
+    service: "gmail",
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     }
 });
 
-// optional check
+// quick check
 transporter.verify((err) => {
-    if (err) {
-        console.log("SMTP error:", err.message);
-    } else {
-        console.log("SMTP ready");
-    }
+    if (err) console.log("SMTP error:", err.message);
+    else console.log("SMTP ready");
 });
 
 /* routes */
@@ -74,7 +71,7 @@ app.post("/api/contact", async (req, res) => {
             });
         }
 
-        // save
+        // save to db
         const newContact = new Contact({ name, email, phone, message });
         await newContact.save();
 
@@ -82,7 +79,7 @@ app.post("/api/contact", async (req, res) => {
 
         const date = new Date().toLocaleString();
 
-        // send to me
+        // email to you
         await transporter.sendMail({
             from: `"Derrick Widner" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_USER,
