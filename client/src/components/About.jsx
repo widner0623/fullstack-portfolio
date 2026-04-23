@@ -2,33 +2,41 @@ import "../styles/about.css";
 
 function About() {
     return (
-        <section className="about">
+       <section className="about">
             <h1>About Me</h1>
 
-            <h3>Where am I from?</h3>
+            <h3>Where I’m From</h3>
             <p>
-                I’m from Beaver Dam, Kentucky, where I’ve always been around hardworking people and real-world problem solving. 
-                Growing up here taught me to figure things out, build with what I have, and stay consistent no matter what.
+                I’m based in Beaver Dam, Kentucky, where I was raised around hard work, consistency, and practical problem-solving. 
+                That environment shaped how I approach everything I build with focus, discipline, and attention to what actually works.
             </p>
 
-            <h3>Why web development?</h3>
+            <h3>Why Web Development</h3>
             <p>
-                I got into web development because I wanted more control over what I could create. 
-                At first it started as curiosity, just trying to understand how websites worked, but it quickly turned into 
-                building real systems, tools, and ideas that could actually help businesses and people.
+                I got into web development through curiosity, wanting to understand how digital systems really worked. 
+                That quickly evolved into building full applications and tools designed to solve real problems. 
+                Today, I focus on creating modern, scalable web solutions that go beyond appearance and deliver real functionality.
             </p>
 
-            <h3>What drives my success?</h3>
+            <h3>What Drives Me</h3>
             <p>
-                I’m driven by progress and problem-solving. I like building things from scratch and seeing them turn into 
-                something functional and useful. Every project I take on is a chance to improve my skills and push my limits.
+                I’m driven by growth, efficiency, and building things the right way. I enjoy taking an idea and turning it into 
+                something fully functional, whether that’s a business tool, a client platform, or a complete web application. 
+                Each project is an opportunity to refine my skills and deliver better results than the last.
             </p>
 
-            <h3>Why should you hire me?</h3>
+            <h3>My Approach</h3>
             <p>
-                Because I don’t just build websites, I build solutions. I focus on clean design, real functionality, and 
-                making sure the end product actually works for the business behind it. I’m reliable, I learn fast, and I 
-                care about the outcome of every project I touch.
+                I approach every project with a focus on clarity, performance, and usability. Clean code, intuitive design, 
+                and real-world functionality are always priorities. I don’t just aim to make something look good. I make sure 
+                it works efficiently and supports the goals behind it.
+            </p>
+
+            <h3>Why Work With Me</h3>
+            <p>
+                I build with purpose. I communicate clearly, adapt quickly, and stay committed to delivering results. 
+                If you’re looking for someone who takes projects seriously and focuses on long-term value rather than quick fixes, 
+                I’m someone you can rely on.
             </p>
         </section>
     );
