@@ -31,6 +31,7 @@ function Footer() {
                     <Link to="/" onClick={() => handleNavClick("/")}>Home</Link>
                     <Link to="/projects" onClick={() => handleNavClick("/projects")}>Projects</Link>
                     <Link to="/contact" onClick={() => handleNavClick("/contact")}>Contact</Link>
+                    <Link to="#" onClick={(e) => e.preventDefault()} className="footer-link-disabled" >Admin</Link>
                 </div>
 
                 <div className="footer-socials">
@@ -56,4 +57,4 @@ function Footer() {
     );
 }
 
-export default Footer
+export default Footer;

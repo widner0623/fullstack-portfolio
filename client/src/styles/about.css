@@ -1,0 +1,22 @@
+.about {
+    min-height: 110vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+.about h1 {
+    padding-bottom: 20px;
+}
+.about h3 {
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #333;
+    border-radius: 25px;
+}
+.about p {
+    max-width: 70%;
+    margin: 20px;
+}

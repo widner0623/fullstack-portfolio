@@ -1,13 +1,15 @@
 .hero {
-    min-height: 80vh;
+    padding: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    border-bottom: 2px solid #ddd;
 }
 .hero-buttons {
     margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     gap: 10px;
