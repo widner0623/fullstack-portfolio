@@ -15,7 +15,7 @@ function Projects() {
                     image={placeholders[0]}
                     demo="http://stevies-buffet-9gxt.vercel.app"
                     github="https://github.com/widner0623/stevies-buffet.git"
-                    tags={["React", "Node.js", "Express", "MongoDB", "Render"]}
+                    tags={["React", "Node.js", "Express", "Render"]}
                 />
                 {/* <ProjectCard
                     title="Sample Project"
