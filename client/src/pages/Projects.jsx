@@ -13,7 +13,7 @@ function Projects() {
                     title="Stevies Buffet"
                     description="Stevies Buffet serves up all-you-can-eat pizza, comfort food, and a fresh sald bar at a price that works for families, teams, and big appetites."
                     image={placeholders[0]}
-                    demo="http://stevies-buffet-9gxt.vercel.app/menu"
+                    demo="http://stevies-buffet-9gxt.vercel.app"
                     github="https://github.com/widner0623/stevies-buffet.git"
                     tags={["React", "Node.js", "Express", "MongoDB", "Render"]}
                 />
